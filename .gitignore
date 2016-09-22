@@ -16,3 +16,4 @@ info/*.texi
 smex-items
 backups/
 places
+javadoc-cache/
