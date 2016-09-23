@@ -1,0 +1,19 @@
+* bare defaults
+
+#+begin_src emacs-lisp
+;; tabs are evil
+(setq indent-tabs-mode nil)
+;; 2 spaces please!
+(setq standard-indent 2)
+;; no whitespace please
+(add-hook 'before-save-hook 'whitespace-cleanup)
+#+end_src
+
+* editorconfig
+
+#+begin_src emacs-lisp
+(use-package editorconfig
+  :ensure t
+  :pin melpa-stable)
+(editorconfig-mode 1)
+#+end_src

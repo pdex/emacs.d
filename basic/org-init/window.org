@@ -1,0 +1,19 @@
+* window keys
+
+#+begin_src emacs-lisp
+;; window keys
+(global-set-key "\C-ch" 'windmove-left)
+(global-set-key "\C-c\C-h" 'windmove-left)
+(global-set-key "\C-cj" 'windmove-down)
+(global-set-key "\C-c\C-j" 'windmove-down)
+(global-set-key "\C-ck" 'windmove-up)
+(global-set-key "\C-c\C-k" 'windmove-up)
+(global-set-key "\C-cl" 'windmove-right)
+(global-set-key "\C-c\C-l" 'windmove-right)
+
+;; http://monkey.org/~marius/emacs-as-a-tiling-window-manager.html
+(global-set-key (kbd "M-J") (lambda () (interactive) (enlarge-window 1)))
+(global-set-key (kbd "M-K") (lambda () (interactive) (enlarge-window -1)))
+(global-set-key (kbd "M-H") (lambda () (interactive) (enlarge-window -1 t)))
+(global-set-key (kbd "M-L") (lambda () (interactive) (enlarge-window 1 t)))
+#+end_src

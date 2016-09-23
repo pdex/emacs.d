@@ -6,13 +6,14 @@
   '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (add-to-list 'package-archives
   '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
-(add-to-list 'package-archives 
+(add-to-list 'package-archives
   '("org" . "http://orgmode.org/elpa/") t)
 (package-initialize)
 
 ;; Bootstrap `use-package'
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
+  (message "use-package not installed")
   (package-install 'use-package))
 
 ;; Use use-package now
@@ -20,8 +21,13 @@
   :ensure t
   :pin org)
 
-(org-babel-load-file (expand-file-name "org-init/emacs-cheatsheet.org" user-emacs-directory))
-(org-babel-load-file (expand-file-name "org-init/shutdown.org" user-emacs-directory))
+(defun pdex-org-init (file-base)
+  (org-babel-load-file (expand-file-name (concat "org-init/" file-base ".org") user-emacs-directory)))
+
+(pdex-org-init "editorconfig")
+(pdex-org-init "emacs-cheatsheet")
+(pdex-org-init "shutdown")
+(pdex-org-init "window")
 
 (let ((custom-file (expand-file-name "custom.el" user-emacs-directory)))
   (if (file-exists-p custom-file)
