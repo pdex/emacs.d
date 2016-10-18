@@ -9,6 +9,13 @@
 (add-hook 'before-save-hook 'whitespace-cleanup)
 #+end_src
 
+* EOL whitespace
+
+#+begin_src emacs-lisp
+;; no whitespace please
+(add-hook 'before-save-hook 'whitespace-cleanup)
+#+end_src
+
 * editorconfig
 
 #+begin_src emacs-lisp
