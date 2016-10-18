@@ -21,8 +21,15 @@
   :ensure t
   :pin org)
 
+(defun pdex-expand-file (file-base ext)
+  (expand-file-name (concat "org-init/" file-base ext) user-emacs-directory))
+
 (defun pdex-org-init (file-base)
-  (org-babel-load-file (expand-file-name (concat "org-init/" file-base ".org") user-emacs-directory)))
+  (let ((path-to-org (pdex-expand-file file-base ".org"))
+	(path-to-elc (pdex-expand-file file-base ".elc")))
+    (if (file-newer-than-file-p path-to-org path-to-elc)
+      (org-babel-load-file path-to-org t)
+      (load path-to-elc))))
 
 (pdex-org-init "editorconfig")
 (pdex-org-init "emacs-cheatsheet")
