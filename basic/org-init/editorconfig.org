@@ -16,6 +16,14 @@
 (add-hook 'before-save-hook 'whitespace-cleanup)
 #+end_src
 
+* backups and autosave
+
+#+begin_src emacs-lisp
+;; disable auto-save and auto-backup
+(setq auto-save-default nil)
+(setq make-backup-files nil)
+#+end_src
+
 * editorconfig
 
 #+begin_src emacs-lisp
