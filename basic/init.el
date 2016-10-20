@@ -33,6 +33,8 @@
 
 (pdex-org-init "editorconfig")
 (pdex-org-init "emacs-cheatsheet")
+(pdex-org-init "org-theme")
+;; TODO rename this to session
 (pdex-org-init "shutdown")
 (pdex-org-init "window")
 

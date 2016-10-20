@@ -1,0 +1,18 @@
+* org-bullets
+
+#+begin_src emacs-lisp
+(use-package org-bullets
+  :ensure t
+  :config (add-hook 'org-mode-hook 'org-bullets-mode)
+  :pin melpa-stable)
+#+end_src
+
+* org-beautify-theme
+  this isn't packaged correctly and it looks like shit. Steal some of these ideas manually.
+
+#+begin_src emacs-lisp
+(use-package org-beautify-theme
+  :disabled t
+  :ensure t
+  :pin melpa-stable)
+#+end_src
