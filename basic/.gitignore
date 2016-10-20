@@ -1,2 +1,4 @@
 org-init/*.el
 org-init/*.elc
+.emacs.desktop
+.emacs.desktop.lock
