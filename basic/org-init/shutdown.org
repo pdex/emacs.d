@@ -9,3 +9,38 @@
 #+begin_src emacs-lisp
 (desktop-save-mode 1)
 #+end_src
+
+* Coax desktop mode into playing nicely with customized themes
+
+#+begin_src emacs-lisp
+;; https://gist.github.com/vividsnow/0609b55bd684d325e7cb
+(defun desktop-load-themes () "load custom themes after desktop" (interactive)
+  (dolist (th custom-enabled-themes) (load-theme th)))
+(add-hook 'desktop-after-read-hook 'desktop-load-themes)
+#+end_src
+
+* Use perspective to manage buffers
+
+#+begin_src emacs-lisp
+(use-package perspective
+  :ensure t
+  :config (persp-mode)
+  :pin melpa-stable)
+#+end_src
+
+* Use projectile to manage project buffers
+
+#+begin_src emacs-lisp
+(use-package projectile
+  :ensure t
+  :config (projectile-mode)
+  :pin melpa-stable)
+#+end_src
+
+* projectile integration for perspective
+
+#+begin_src emacs-lisp
+(use-package persp-projectile
+  :ensure t
+  :pin melpa-stable)
+#+end_src

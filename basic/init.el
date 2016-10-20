@@ -26,7 +26,7 @@
 
 (defun pdex-org-init (file-base)
   (let ((path-to-org (pdex-expand-file file-base ".org"))
-	(path-to-elc (pdex-expand-file file-base ".elc")))
+        (path-to-elc (pdex-expand-file file-base ".elc")))
     (if (file-newer-than-file-p path-to-org path-to-elc)
       (org-babel-load-file path-to-org t)
       (load path-to-elc))))
@@ -36,6 +36,8 @@
 (pdex-org-init "shutdown")
 (pdex-org-init "window")
 
-(let ((custom-file (expand-file-name "custom.el" user-emacs-directory)))
-  (if (file-exists-p custom-file)
-    (load custom-file)))
+;; tell customize to write it's state outside of init.el
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+;; load the customized state (if available)
+(if (file-exists-p custom-file)
+    (load custom-file))
