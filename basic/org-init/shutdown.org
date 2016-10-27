@@ -37,6 +37,69 @@
   :pin melpa-stable)
 #+end_src
 
+* Use desktop to persist perspectives
+
+#+begin_src emacs-lisp
+  (defun perspectives-buffer-name-p (buffer)
+    (if (and buffer
+	     (buffer-name buffer)
+	     (not (string-prefix-p "*" (buffer-name buffer)))
+	     (not (string-suffix-p "*" (buffer-name buffer))))
+	t
+      nil))
+
+  (defun perspectives-hash-filter (current filtered parameters saving)
+    (let ((value (cdr current))
+	  (result ())
+	  (keys (hash-table-keys (cdr current))))
+      ;; for every perspective...
+      (dolist (key keys)
+	(let ((persp (gethash key value)))
+	  ;; that isn't killed...
+	  (if (not (persp-killed persp))
+	      (add-to-list
+	       'result
+	       (cons key
+		     ;; save the list of buffers
+		     (list (cons "buffers"
+		     (list
+		      (mapcar 'buffer-name (seq-filter 'perspectives-buffer-name-p (persp-buffers persp)))))))))))
+    ;; return a different variable name so perspectives doesn't clobber it
+    (cons 'perspectives-hash-serialized result)))
+
+  ;; serialize perspectives hash
+  (add-to-list 'frameset-filter-alist '(perspectives-hash . perspectives-hash-filter))
+  ;; don't serialize anything else
+  (add-to-list 'frameset-filter-alist '(persp-modestring . :never))
+  (add-to-list 'frameset-filter-alist '(persp-recursive . :never))
+  (add-to-list 'frameset-filter-alist '(persp-last . :never))
+  (add-to-list 'frameset-filter-alist '(persp-curr . :never))
+
+  (defun perspectives-restore-state ()
+    (dolist (frame (frame-list))
+      ;; get the serialized state off of the frame
+      (let ((state (frame-parameter frame 'perspectives-hash-serialized)))
+	(if state (progn
+		    (message "Found state, attempting restore")
+		    ;; delete it so we don't end up in a loop
+		    (set-frame-parameter frame 'perspectives-hash-serialized nil)
+		    (with-selected-frame frame
+		      (dolist (elem state)
+			;; recreate the perspective
+			(with-perspective (car elem)
+			  (dolist (buffer-name (car (cdr (assoc "buffers" (cdr elem)))))
+			    ;; add the buffer back to the perspective
+			    (persp-add-buffer buffer-name)
+			    )))
+		      ))
+	  (message "No state found")
+	  )
+	)))
+
+  (add-hook 'desktop-after-read-hook 'perspectives-restore-state)
+
+#+end_src
+
 * projectile integration for perspective
 
 #+begin_src emacs-lisp
