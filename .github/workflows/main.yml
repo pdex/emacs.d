@@ -25,6 +25,10 @@ jobs:
     # Runs a single command using the runners shell
     - name: test the emacs
       run: echo ./test.sh
+    - name: setup emacs
+      uses: purcell/setup-emacs@master
+      with:
+        version: 26.3
     - name: Emacs Lisp check
       uses: leotaku/elisp-check@v1.0
 
