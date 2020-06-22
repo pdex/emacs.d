@@ -22,7 +22,8 @@
   :pin org)
 
 (defun pdex-expand-file (file-base ext)
-  (expand-file-name (concat file-base ext) user-emacs-directory))
+  ;; look for file in the same directory as init.el
+  (expand-file-name (concat file-base ext)))
 
 (defun pdex-org-init (file-base)
   (let ((path-to-org (pdex-expand-file file-base ".org"))
