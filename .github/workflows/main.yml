@@ -31,6 +31,8 @@ jobs:
         version: 26.3
     - name: Emacs Lisp check
       uses: leotaku/elisp-check@v1.0
+      with:
+        file: basic/init.el
 
     # Runs a set of commands using the runners shell
     - name: Run a multi-line script
