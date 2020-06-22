@@ -32,6 +32,7 @@ jobs:
     - name: Emacs Lisp check
       uses: leotaku/elisp-check@v1.0
       with:
+        check: load-file
         file: emacs.d/init.el
 
     # Runs a set of commands using the runners shell
