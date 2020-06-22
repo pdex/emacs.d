@@ -22,7 +22,7 @@
   :pin org)
 
 (defun pdex-expand-file (file-base ext)
-  (expand-file-name (concat "org-init/" file-base ext) user-emacs-directory))
+  (expand-file-name (concat file-base ext) user-emacs-directory))
 
 (defun pdex-org-init (file-base)
   (let ((path-to-org (pdex-expand-file file-base ".org"))
