@@ -2,9 +2,7 @@
 
 #+begin_src emacs-lisp
 (use-package org-bullets
-  :ensure t
-  :config (add-hook 'org-mode-hook 'org-bullets-mode)
-  :pin melpa-stable)
+  :config (add-hook 'org-mode-hook 'org-bullets-mode))
 #+end_src
 
 * org-beautify-theme
@@ -13,6 +11,5 @@
 #+begin_src emacs-lisp
 (use-package org-beautify-theme
   :disabled t
-  :ensure t
-  :pin melpa-stable)
+  :ensure t)
 #+end_src

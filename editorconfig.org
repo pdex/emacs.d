@@ -27,8 +27,6 @@
 * editorconfig
 
 #+begin_src emacs-lisp
-(use-package editorconfig
-  :ensure t
-  :pin melpa-stable)
+(use-package editorconfig)
 (editorconfig-mode 1)
 #+end_src

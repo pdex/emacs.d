@@ -1,36 +1,53 @@
-;; Setup package.el
-(require 'package)
-;; since we call package-initialize, we don't need emacs startup.el to do the same
-(setq package-enable-at-startup nil)
-(add-to-list 'package-archives
-  '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(add-to-list 'package-archives
-  '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
-(add-to-list 'package-archives
-  '("org" . "http://orgmode.org/elpa/") t)
-(package-initialize)
+;; init.el --- emacs startup file -*- lexical-binding: t -*-
+;; https://github.com/raxod502/straight.el
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-;; Bootstrap `use-package'
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (message "use-package not installed")
-  (package-install 'use-package))
+;; install use-package with straight.el
+(straight-use-package 'use-package)
+;; use-package: install with straight.el instead of package.el
+;; https://github.com/raxod502/straight.el#integration-with-use-package-1
+(setq straight-use-package-by-default t)
+;; download gnu-elpa packages from github mirror straight-mirror/<package>
+;; https://github.com/raxod502/straight.el#gnu-elpa
+(setq straight-recipes-gnu-elpa-use-mirror t)
 
-;; Use use-package now
-(use-package org
-  :ensure t
-  :pin org)
+;; install org
+(use-package org)
+
+;; install tron theme and activate it
+(use-package tron-legacy-theme
+  :config
+  (load-theme 'tron-legacy t))
+
+(if (boundp 'mac-option-modifier)
+      (progn
+	(setq mac-option-modifier 'meta)
+	(setq mac-command-modifier 'hyper)
+	))
 
 (defun pdex-expand-file (file-base ext)
   ;; look for file in the same directory as init.el
-  (expand-file-name (concat file-base ext)))
+  (expand-file-name (concat file-base ext) (file-name-directory (or load-file-name (buffer-file-name)))))
+
+(add-to-list 'load-path "~/.emacs.d/")
 
 (defun pdex-org-init (file-base)
   (let ((path-to-org (pdex-expand-file file-base ".org"))
         (path-to-elc (pdex-expand-file file-base ".elc")))
     (if (file-newer-than-file-p path-to-org path-to-elc)
       (org-babel-load-file path-to-org t)
-      (load path-to-elc))))
+      (load path-to-elc nil nil t))))
 
 (pdex-org-init "editorconfig")
 (pdex-org-init "emacs-cheatsheet")

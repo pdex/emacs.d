@@ -2,9 +2,7 @@
   `M-x cheatsheet-show`
 
 #+begin_src emacs-lisp
-(use-package cheatsheet
-  :ensure t
-  :pin melpa-stable)
+(use-package cheatsheet :ensure t)
 #+end_src
 
 * Common
