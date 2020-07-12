@@ -46,7 +46,9 @@
   (let ((path-to-org (pdex-expand-file "org-init" file-base ".org"))
         (path-to-elc (pdex-expand-file "org-init" file-base ".elc")))
     (if (file-newer-than-file-p path-to-org path-to-elc)
-      (org-babel-load-file path-to-org t)
+      (progn
+        (org-babel-load-file path-to-org nil)
+        (org-babel-load-file path-to-org t))
       (load path-to-elc nil nil t))))
 
 (pdex-org-init "editorconfig")
