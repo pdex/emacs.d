@@ -22,9 +22,10 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    # Runs a single command using the runners shell
-    - name: test the emacs
-      run: echo ./test.sh
+    - name: copy repo into ~/.emacs.d
+      run: |
+        mkdir ~/.emacs.d
+        cp -Rv . ~/.emacs.d
     - name: setup emacs
       uses: purcell/setup-emacs@master
       with:
@@ -33,10 +34,5 @@ jobs:
       uses: leotaku/elisp-check@v1.0
       with:
         check: load-file
-        file: init.el
+        file: ~/.emacs.d/init.el
 
-    # Runs a set of commands using the runners shell
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.

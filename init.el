@@ -36,15 +36,15 @@
 	(setq mac-command-modifier 'hyper)
 	))
 
-(defun pdex-expand-file (file-base ext)
+(defun pdex-expand-file (dir file-base ext)
   ;; look for file in the same directory as init.el
-  (expand-file-name (concat file-base ext) (file-name-directory (or load-file-name (buffer-file-name)))))
+  (expand-file-name (concat dir "/" file-base ext) (file-name-directory (or load-file-name (buffer-file-name)))))
 
-(add-to-list 'load-path "~/.emacs.d/")
+(add-to-list 'load-path "~/.emacs.d/org-init")
 
 (defun pdex-org-init (file-base)
-  (let ((path-to-org (pdex-expand-file file-base ".org"))
-        (path-to-elc (pdex-expand-file file-base ".elc")))
+  (let ((path-to-org (pdex-expand-file "org-init" file-base ".org"))
+        (path-to-elc (pdex-expand-file "org-init" file-base ".elc")))
     (if (file-newer-than-file-p path-to-org path-to-elc)
       (org-babel-load-file path-to-org t)
       (load path-to-elc nil nil t))))
